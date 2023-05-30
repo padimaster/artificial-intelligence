@@ -1,5 +1,7 @@
 package com.ai;
 
+import com.ai.geneticAlgorithms.GeneticAlgorithm;
+
 /**
  * Hello world!
  */
@@ -12,6 +14,7 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(10, 5);
+        geneticAlgorithm.run(3, 3);
     }
 }
