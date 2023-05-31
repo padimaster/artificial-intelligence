@@ -1,30 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.ai.geneticAlgorithms.movies;
-
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+package com.ai.geneticAlgorithms.songs;
 
 import org.jgap.FitnessFunction;
 import org.jgap.IChromosome;
 import org.jgap.impl.IntegerGene;
 
-/**
- *
- * @author Henry Paz
- */
-public class MovieFitnessFunction extends FitnessFunction {
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
-    List movies = new ArrayList();
-    List genres = new ArrayList();
+public class SongFitnessFunction extends FitnessFunction {
 
-    public MovieFitnessFunction(List movies, List genres) {
-        this.movies = movies;
+    private List<Song> songs;
+    private List<String> genres;
+
+    public SongFitnessFunction(List<Song> songs, List<String> genres) {
+        this.songs = songs;
         this.genres = genres;
     }
 
@@ -47,28 +39,28 @@ public class MovieFitnessFunction extends FitnessFunction {
                 dups.add(index);
             }
 
-            Movie movie = (Movie) movies.get(index);
-            double genreScore = getGenreScore(movie);
+            Song song = (Song) songs.get(index);
+            double genreScore = getGenreScore(song);
             if (genreScore == 0) {
                 badSolution = 0;
             }
 
-            score = (score + movie.getImdbRating()) + (genreScore);
+            score = (score + song.getImdbRating()) + (genreScore);
+//            System.out.println(movie + " socore: " + score);
         }
         return (score * badSolution);
     }
 
-    private double getGenreScore(Movie movie) {
+    private double getGenreScore(Song song) {
         double genreScore = 0;
         Iterator it = this.genres.iterator();
 
         while (it.hasNext()) {
             String genre = (String) it.next();
-            if (movie.getGenre().contains(genre)) {
+            if (song.getGenre().contains(genre)) {
                 genreScore = genreScore + 1;
             }
         }
         return genreScore;
     }
-
 }
